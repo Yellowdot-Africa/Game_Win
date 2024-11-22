@@ -1,0 +1,43 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; 
+}
+
+.container {
+  max-width: 100%; 
+  overflow: hidden; 
+
+}
+
+.content-container {
+  width: 341px;
+  height: 516px;
+  border-radius: 18px;
+  margin: 134px 25px 194px 24px;
+  background: radial-gradient(58.43% 103.88% at 56.74% 50%, rgba(4, 59, 110, 0.4) 0%, rgba(2, 27, 49, 0.4) 100%);
+  box-shadow: 
+    22px 35px 91px 0px #0000001A,
+    89px 139px 165px 0px #00000017,
+    200px 312px 223px 0px #0000000D,
+    355px 556px 264px 0px #00000003,
+    555px 868px 288px 0px #00000000;
+}
+
+
+
+.border-gradient{
+  border-top: 4px solid;
+  border-bottom: 4px solid;
+  border-image-source: linear-gradient(90.76deg, #FFDB00 0%, #483E00 100%);
+  border-image-slice: 1;
+}
+
