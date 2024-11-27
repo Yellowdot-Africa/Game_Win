@@ -1,7 +1,7 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useState, useEffect, useContext, useCallback } from "react";
 import {
   getSubscriberProfile,
-  createSubscriberProfile,
+  saveSubscriberProfile,
 } from "../api/apiService";
 import AuthContext from "../Context/AuthContext";
 import SubscriptionContext from "../Context/SubscriptionContext";
@@ -10,6 +10,10 @@ const ProfileContext = createContext();
 
 export const ProfileProvider = ({ children }) => {
   const [profile, setProfile] = useState(null);
+  // const [profile, setProfile] = useState(() => {
+  //   const storedProfile = localStorage.getItem("profile");
+  //   return storedProfile ? JSON.parse(storedProfile) : null;
+  // });
   const [loading, setLoading] = useState(false);
   const [createLoading, setCreateLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -26,49 +30,64 @@ export const ProfileProvider = ({ children }) => {
   });
   const { authData } = useContext(AuthContext);
 
-  useEffect(() => {
-    if (createLoading) {
-      setLoading(true);
-      setError(null);
+  const updateProfile = (newProfile) => {
+    setProfile(newProfile);
+    // Save profile to localStorage
+    localStorage.setItem("profile", JSON.stringify(newProfile));
+  };
 
-      getSubscriberProfile(msisdn)
-        .then((response) => {
-          if (response.isSuccessful) {
-            console.log("Profile found:", response.data);
-            setProfile(response.data);
-          } else {
-            throw new Error("Profile not found, attempting to create profile.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error creating profile:", error);
-          setError("Error creating profile");
-        })
-        .finally(() => {
-          setLoading(false);
-          setCreateLoading(false);
-        });
-    }
-  }, [createLoading]);
+  // useEffect(() => {
+  //   if (createLoading) {
+  //     setLoading(true);
+  //     setError(null);
 
-  const fetchProfile = async (msisdn) => {
+  //     getSubscriberProfile(msisdn)
+  //       .then((response) => {
+  //         if (response.isSuccessful) {
+  //           console.log("Profile found:", response.data);
+  //           setProfile(response.data);
+  //         } else {
+  //           throw new Error("Profile not found, attempting to create profile.");
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error creating profile:", error);
+  //         setError("Error creating profile");
+  //       })
+  //       .finally(() => {
+  //         setLoading(false);
+  //         setCreateLoading(false);
+  //       });
+  //   }
+  // }, [createLoading]);
+
+
+
+
+  
+  const fetchProfile = useCallback(async () => {
+    if (loading) return;
     setLoading(true);
     setError(null);
     try {
       const response = await getSubscriberProfile(msisdn);
       if (response?.isSuccessful) {
-        setProfile(response.data);
+        updateProfile(response.data);
+
+        // setProfile(response.data);
         setAvatar(response.data.avatar);
         setSelectedAvatar(avatarList[response.data.avatar - 1]);
       } else {
+
         throw new Error("Profile not found, attempting to create profile.");
+
       }
     } catch (error) {
       if (error.response && error.response.status === 404) {
         console.warn("Profile not found. Creating a new profile...");
 
         try {
-          const createResponse = await createProfile({
+          const createResponse = await saveUserSubProfile({
             msisdn,
             nickname,
             avatar,
@@ -77,29 +96,29 @@ export const ProfileProvider = ({ children }) => {
             accountName,
           });
           if (createResponse.isSuccessful) {
-            console.log("Profile created successfully:", createResponse.data);
+            console.log("Profile saved successfully:", createResponse.data);
             setLoading(true);
             setCreateLoading(true);
             setProfile(createResponse.data);
             setAvatar(createResponse.data.avatar);
           } else {
-            setError("Failed to create profile: " + createResponse.message);
+            setError("Failed to save profile: " + createResponse.message);
           }
         } catch (createError) {
-          console.error("Error creating profile:", createError);
-          setError("Error creating profile");
+          console.error("Error saving profile:", createError);
+          setError("Error saving profile");
         }
       }
     } finally {
       setLoading(false);
     }
-  };
+  }, [loading, msisdn]);
 
-  const createProfile = async (profileData) => {
+  const saveUserSubProfile = async (profileData) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await createSubscriberProfile(profileData);
+      const response = await saveSubscriberProfile(profileData);
       if (response.isSuccessful) {
         setOperationStatus({
           isSuccessful: response.isSuccessful,
@@ -107,12 +126,13 @@ export const ProfileProvider = ({ children }) => {
         });
         setProfile(response.data);
         setAvatar(response.data.avatar);
+        setNickname(response.data.nickname);
       } else {
-        setError("Failed to create profile: " + response.message);
+        setError("Failed to save profile: " + response.message);
       }
     } catch (error) {
-      console.error("Error creating profile:", error);
-      setError("Error creating profile");
+      console.error("Error saving profile:", error);
+      setError("Error saving profile");
     } finally {
       setLoading(false);
     }
@@ -122,6 +142,7 @@ export const ProfileProvider = ({ children }) => {
     <ProfileContext.Provider
       value={{
         profile,
+        updateProfile,
         loading,
         error,
         nickname,
@@ -130,7 +151,9 @@ export const ProfileProvider = ({ children }) => {
         setAvatar,
         operationStatus,
         fetchProfile,
-        createProfile,
+        // fetchProfile,
+        // createProfile,
+        saveUserSubProfile,
         msisdn,
         // updateProfile,
       }}
@@ -141,3 +164,7 @@ export const ProfileProvider = ({ children }) => {
 };
 
 export default ProfileContext;
+
+
+
+

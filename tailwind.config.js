@@ -8,6 +8,11 @@ export default {
       fontFamily: {
         mochiy: ['Mochiy Pop P One', 'sans-serif'],
       },
+      textColor: {
+          //  gradient:[]
+           'custom-gradient': 'linear-gradient(to right, var(--tw-gradient-stops))',
+
+      },
       fontSize: {
         '16px': '16px',
         '14px': '14px',
@@ -34,4 +39,13 @@ export default {
   },
   plugins: [],
 }
+
+
+
+
+
+
+
+
+
 

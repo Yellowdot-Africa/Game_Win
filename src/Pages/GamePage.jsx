@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import GameContext from "../Context/GameContext";
+import { submitGamePlay } from "../api/apiService";
 
 const GamePage = () => {
   const [timer, setTimer] = useState(15);
@@ -21,6 +22,9 @@ const GamePage = () => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [resetKey, setResetKey] = useState(0);
   const [answerStatus, setAnswerStatus] = useState("");
+  const [scoreLoaded, setScoreLoaded] = useState(false);
+
+
   const {
     currentQuestion,
     setCurrentQuestion,
@@ -67,6 +71,12 @@ const GamePage = () => {
       setScore((prevScore) => prevScore);
     }
   }, [timer, gameOver]);
+
+  useEffect(() => {
+    if (submitted && modalType === "congratulations" && !isLoading && score !== undefined) {
+      setModalVisible(true);
+    }
+  }, [submitted, modalType, isLoading, score]);
 
   // useEffect(() => {
   //   if (timer > 0 && !gameOver && !submitted) {
@@ -121,9 +131,9 @@ const GamePage = () => {
       userInput.join("").toUpperCase() ===
       currentQuestion.correctAnswer.toUpperCase()
     ) {
+      setSubmitted(true);
       setModalType("congratulations");
       setModalVisible(true);
-      setSubmitted(true);
       setGameOver(true);
     } else {
       setModalType("wrongAnswer");
@@ -185,10 +195,19 @@ const GamePage = () => {
     setResetKey((prevKey) => prevKey + 1);
   };
 
+  // const handleTimeUp = () => {
+  //   setGameOver(true);
+  //   setScore(0);
+  // };
+
   const handleTimeUp = () => {
-    setGameOver(true);
-    setScore(0);
+    if (!gameOver) {
+      setGameOver(true);
+      setModalType("timeup");
+      setModalVisible(true);
+    }
   };
+  
 
   const handleHome = () => {
     navigate("/home");
@@ -259,7 +278,7 @@ const GamePage = () => {
             <div className="flex items-center justify-center">
               <button
                 onClick={handleHintClick}
-                className="px-4 py-2 mb-4 bg-violet-900  text-white rounded-md  transition"
+                className="px-4 py-2 mb-4 bg-violet-900  text-white rounded-md font-mochiy text-[14px]  transition"
               >
                 {showHint ? "Hide Hint" : "Show Hint"}
               </button>
@@ -273,7 +292,7 @@ const GamePage = () => {
             {/* Keyboard */}
             <div className="mx-auto bg-violet-950 max- w-full  h-full rounded-[20px] px-5 py-10 md:w-[444px] lg:w-[545px] ">
               <div className="flex flex-col justify-center ">
-                <p className="text-white mx-auto mb-4">Selections</p>
+                <p className="text-white mx-auto font-mochiy mb-4">Selections</p>
 
                 {/* Word Input Fields */}
                 {/* <div className=" flex mx-auto w-1/4 gap-1 mb-4 justify-center">
@@ -333,27 +352,35 @@ const GamePage = () => {
             </button>
 
             {modalVisible &&
-              (modalType === "congratulations" ? (
+              (modalType === "congratulations" ? ( 
+
                 <CongratulationsModal
                   score={score}
                   timeSpent={15 - timer}
                   onPlayAgain={handlePlayAgain}
-                  onHome={() => navigate("/home")}
-                  onLeaderboard={() => navigate("/leaderboard")}
+                  onHome ={handleHome}
+                  onLeaderboard ={handleLeaderboard}
+                  // onHome={() => navigate("/home")}
+                  // onLeaderboard={() => navigate("/leaderboard")}
+                  isLoading={isLoading}
                 />
+
+
               ) : modalType === "wrongAnswer" ? (
                 <WrongAnswerModal
                   score={score}
                   onPlayAgain={handlePlayAgain}
-                  onHome={() => navigate("/home")}
-                  onLeaderboard={() => navigate("/leaderboard")}
+                  onHome ={handleHome}
+                  onLeaderboard ={handleLeaderboard}
+                  
                 />
               ) : (
                 <TimeUpModal
                   score={score}
                   onPlayAgain={handlePlayAgain}
-                  onHome={() => navigate("/home")}
-                  onLeaderboard={() => navigate("/leaderboard")}
+                  onHome ={handleHome}
+                  onLeaderboard ={handleLeaderboard}
+                  
                 />
               ))}
           </div>
@@ -364,3 +391,17 @@ const GamePage = () => {
 };
 
 export default GamePage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

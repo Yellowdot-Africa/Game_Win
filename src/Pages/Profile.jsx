@@ -23,7 +23,8 @@ const Profile = () => {
     loading,
     error,
     fetchProfile,
-    createProfile,
+    saveUserSubProfile,
+    // createProfile,
     operationStatus,
     msisdn,
   } = useContext(ProfileContext);
@@ -40,6 +41,21 @@ const Profile = () => {
     }
   }, [msisdn]);
 
+  useEffect(() => {
+    console.log("ProfilePage Profile:", profile);
+  }, [profile]);
+  
+
+  useEffect(() => {
+    const storedNickname = localStorage.getItem("nickname");
+    const storedAvatar = localStorage.getItem("avatar");
+
+    if (storedNickname) setNickname(storedNickname);
+    if (storedAvatar) setAvatar(parseInt(storedAvatar));
+  }, []);
+
+
+
   const handleAddAvatarClick = () => {
     setIsAddingAvatar(true);
   };
@@ -54,12 +70,31 @@ const Profile = () => {
     setAvatarForPlusIcon(selectedAvatar);
   };
 
+  // const handleSaveAvatar = async () => {
+  //   if (selectedAvatar && profile) {
+  //     const avatarIndex = avatarList.indexOf(selectedAvatar) + 1;
+  //     const updatedProfile = { ...profile, avatar: avatarIndex };
+  //     await saveUserSubProfile(updatedProfile);
+  //     localStorage.setItem("avatar", avatar);
+
+  //     setAvatar(avatarIndex);
+  //   }
+  //   setIsAddingAvatar(false);
+  // };
+
   const handleSaveAvatar = async () => {
     if (selectedAvatar && profile) {
       const avatarIndex = avatarList.indexOf(selectedAvatar) + 1;
       const updatedProfile = { ...profile, avatar: avatarIndex };
-      await createProfile(updatedProfile);
-      setAvatar(avatarIndex);
+      
+      try {
+        await saveUserSubProfile(updatedProfile);
+        localStorage.setItem("avatar", avatarIndex); // Correct the stored avatar index
+        setAvatar(avatarIndex);
+        fetchProfile(msisdn); // Re-fetch the profile to ensure it's up to date
+      } catch (error) {
+        console.error("Error saving avatar:", error);
+      }
     }
     setIsAddingAvatar(false);
   };
@@ -72,13 +107,46 @@ const Profile = () => {
     setNickname(event.target.value);
   };
 
+
   const handleSaveNickname = async () => {
-    if (nickname !== profile.nickname) {
-      const updatedProfile = { ...profile, nickname };
-      await createProfile(updatedProfile);
+    if (!profile || nickname === profile.nickname) return;
+  
+    const updatedProfile = { ...profile, nickname };
+    try {
+      await saveUserSubProfile(updatedProfile);
+            localStorage.setItem("nickname", nickname);
+            fetchProfile();
+      setIsEditingNickname(false);
+    } catch (error) {
+      console.error("Error saving nickname:", error);
     }
-    setIsEditingNickname(false);
   };
+  
+
+  // const handleSaveNickname = async () => {
+  //   if (!profile) {
+  //     console.error("Profile is null or undefined");
+  //     return;
+  //   }
+  
+  //   if (nickname !== profile.nickname) {
+  //     const updatedProfile = { ...profile, nickname };
+  //     await saveUserSubProfile(updatedProfile);
+  //   }
+  //   setIsEditingNickname(false);
+  // };
+  
+
+  // const handleSaveNickname = async () => {
+  //   if (nickname !== profile.nickname) {
+
+  //     const updatedProfile = { ...profile, nickname };
+  //     await createProfile(updatedProfile);
+  //     // localStorage.setItem("nickname", nickname);
+
+  //   }
+  //   setIsEditingNickname(false);
+  // };
 
   const handleCancelAddNickname = () => {
     setIsEditingNickname(false);
@@ -293,3 +361,13 @@ const Profile = () => {
 };
 
 export default Profile;
+
+
+
+
+
+
+
+
+
+

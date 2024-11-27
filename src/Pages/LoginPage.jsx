@@ -96,7 +96,7 @@ const LoginPage = () => {
         <div className="flex justify-center mt-20 mx-auto md:w-1/2 ">
           <button
             onClick={handleNextButton}
-            className={`w-full py-2 rounded-full text-[12px] font-semibold font-mochiy text-white ${
+            className={`w-full py-3.5 rounded-full text-[12px] font-semibold font-mochiy text-white ${
               isPhoneNumberValid
                 ? "bg-gradient-to-r from-purple-500 to-blue-500"
                 : "bg-neutral-300"

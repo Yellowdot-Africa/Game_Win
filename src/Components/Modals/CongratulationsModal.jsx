@@ -6,6 +6,7 @@ const CongratulationsModal = ({
   onPlayAgain,
   onHome,
   onLeaderboard,
+  isLoading,
 }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -14,7 +15,11 @@ const CongratulationsModal = ({
           Congratulations!
         </h2>
         <p className="text-center mb-6 text-[12px] font-mochiy">
-          {score} points awarded!
+        {isLoading ? (
+            <span className="animate-pulse">Loading score...</span>
+            ) : (
+              `${score} points awarded!`
+              )}
         </p>
         <p className="text-center mb-6 text-[12px] font-mochiy">
           Time: {timeSpent} seconds
@@ -46,3 +51,9 @@ const CongratulationsModal = ({
 };
 
 export default CongratulationsModal;
+
+
+
+
+
+

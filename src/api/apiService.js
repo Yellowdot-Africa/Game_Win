@@ -12,34 +12,64 @@ const apiClient = axios.create({
 });
 
 let globalTokenData = null;
+let authenticationPromise = null; 
 
 // AUTH API
+// export const authenticate = async () => {
+//   if (globalTokenData && globalTokenData.expiryTime > new Date().getTime()) {
+//     return globalTokenData;
+//   }
+
+//   try {
+//     const response = await apiClient.post("/Authorization/login", {
+//       username: "games_sa_gamewin",
+//       password: "password",
+//     });
+
+//     const { jwtToken, username, tokenExpiry } = response.data.data;
+//     const expiryTime = new Date().getTime() + tokenExpiry * 1000;
+
+//     globalTokenData = {
+//       token: jwtToken,
+//       expiryTime,
+//       username,
+//     };
+
+//     return globalTokenData;
+//   } catch (error) {
+//     console.error("Error authenticating:", error);
+//     throw error;
+//   }
+// };
+
 export const authenticate = async () => {
   if (globalTokenData && globalTokenData.expiryTime > new Date().getTime()) {
     return globalTokenData;
   }
 
-  try {
-    const response = await apiClient.post("/Authorization/login", {
-      username: "games_sa_gamewin",
-      password: "password",
-    });
+  if (!authenticationPromise) {
+    authenticationPromise = apiClient
+      .post("/Authorization/login", {
+        username: "games_sa_gamewin",
+        password: "password",
+      })
+      .then((response) => {
+        const { jwtToken, username, tokenExpiry } = response.data.data;
+        const expiryTime = new Date().getTime() + tokenExpiry * 1000;
 
-    const { jwtToken, username, tokenExpiry } = response.data.data;
-    const expiryTime = new Date().getTime() + tokenExpiry * 1000;
-
-    globalTokenData = {
-      token: jwtToken,
-      expiryTime,
-      username,
-    };
-
-    return globalTokenData;
-  } catch (error) {
-    console.error("Error authenticating:", error);
-    throw error;
+        globalTokenData = { token: jwtToken, expiryTime, username };
+        authenticationPromise = null; // Reset promise after completion
+        return globalTokenData;
+      })
+      .catch((error) => {
+        authenticationPromise = null; // Reset on error too
+        throw error;
+      });
   }
+
+  return authenticationPromise;
 };
+
 
 // get subscriberprofile API
 export const getSubscriberProfile = async (msisdn) => {
@@ -66,7 +96,7 @@ export const getSubscriberProfile = async (msisdn) => {
 };
 
 // Create Subscriber Profile
-export const createSubscriberProfile = async ({
+export const saveSubscriberProfile = async ({
   msisdn,
   nickname,
   avatar,
@@ -87,9 +117,13 @@ export const createSubscriberProfile = async ({
       accountNumber,
       accountName,
     };
+    console.log('Request Payload:', profileData);
+
 
     const response = await apiClient.post(
+
       "/Profile/SaveUserProfile",
+
       profileData,
       {
         headers: {
@@ -101,7 +135,7 @@ export const createSubscriberProfile = async ({
 
     return response.data;
   } catch (error) {
-    console.error("Error creating subscriber profile:", error);
+    console.error("Error saving subscriber profile:", error);
     throw error;
   }
 };
@@ -224,3 +258,8 @@ export const checkSubscriptionStatus = async (msisdn, serviceId) => {
     throw error;
   }
 };
+
+
+
+
+

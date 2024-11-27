@@ -7,6 +7,8 @@ import Profile from "./Pages/Profile";
 import GamePage from "./Pages/GamePage";
 import LoginPage from './Pages/LoginPage';
 import SubscriptionPage from './Pages/SubscriptionPage';
+import TnCPage from './Pages/TnCPage';
+import FAQ from './Pages/FAQ';
 import './App.css';
 
 
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
   {
     path: "/user-profile",
     element: <Profile />,
+  },
+  {
+    path: "/terms-and-conditions",
+    element: <TnCPage />,
+  },
+  {
+    path: "/faq",
+    element: <FAQ />,
   },
   {
     path: "/subscribe",

@@ -18,10 +18,13 @@ export const GameProvider = ({ children, count = 10 }) => {
   useEffect(() => {
     if (!msisdn) {
       console.error("MSISDN is not available in SubscriptionContext");
+      setIsLoading(false);
+
       return;
     }
     const fetchQuestions = async () => {
       try {
+        setIsLoading(true);
         const response = await getGameQuestions(count, msisdn);
         console.log("user msisdn is ", msisdn);
         if (response.isSuccessful && response.data) {
@@ -74,11 +77,13 @@ export const GameProvider = ({ children, count = 10 }) => {
   };
 
   const handleSubmitGame = async (gameData) => {
+    setIsLoading(true)
     const response = await submitGamePlay(gameData);
     if (response.isSuccessful) {
       setScore(response.data);
     }
     setSubmissionStatus(response);
+    setIsLoading(false);
   };
 
   return (
@@ -105,3 +110,8 @@ export const GameProvider = ({ children, count = 10 }) => {
 };
 
 export default GameContext;
+
+
+
+
+

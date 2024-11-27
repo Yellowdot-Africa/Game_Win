@@ -16,17 +16,24 @@ import "../App.css";
 const MainScreen = () => {
   const [showContent, setShowContent] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const { profile } = useContext(ProfileContext);
+  const { profile, fetchProfile } = useContext(ProfileContext);
   const [avatarForPlusIcon, setAvatarForPlusIcon] = useState(null);
   const [avatarList] = useState([Avatar1, Avatar2, Avatar3, Avatar4, Avatar5]);
 
+
   useEffect(() => {
+    if (!profile) {
+      fetchProfile();
+    }
+
     const timer = setTimeout(() => {
       setShowContent(true);
-    }, 3000);
+    }, 500);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [profile, fetchProfile]);  
+
+  
 
   const handlePlayClick = () => {
     setShowModal(true);
@@ -88,12 +95,19 @@ const MainScreen = () => {
       )}
 
       <div className="absolute top-14 right-8 flex justify-center items-center gap-4 rounded-full px-6 py-2 shadow-shadow-2 bg-gradient-to-r from-purple-500 to-blue-500">
+      <Link to="/terms-and-conditions">
+
         <button className="text-white text-[12px] font-mochiy  border-white border rounded-[28px] px-2 py-1 ">
           T&C's
         </button>
+        </Link>
+        <Link to="/faq">
+
         <button className="text-white text-[12px] font-mochiy  border-white border rounded-[28px] px-2 py-1 ">
           FAQ's
         </button>
+        </Link>
+
       </div>
 
       {showModal && <InstructionModal onClose={closeModal} />}
@@ -102,3 +116,15 @@ const MainScreen = () => {
 };
 
 export default MainScreen;
+
+
+
+
+
+
+
+
+
+
+
+

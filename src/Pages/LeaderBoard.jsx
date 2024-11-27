@@ -95,7 +95,7 @@ const Leaderboard = () => {
               {/* Table Header */}
               <div className="flex items-center justify-between p-4 bg-[#f1f1f1] font-semibold text-gray-700 w-[80vw]">
                 <div className="w-1/4 text-center">Rank</div>
-                <div className="w-1/2 text-center">MSISDN</div>
+                <div className="w-1/2 text-center">Phone</div>
                 <div className="w-1/4 text-right">Points</div>
               </div>
               {/* Table Rows */}
