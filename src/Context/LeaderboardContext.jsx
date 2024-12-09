@@ -34,8 +34,7 @@ export const LeaderboardProvider = ({ children }) => {
 
   useEffect(() => {
     if (msisdn) {
-      console.log("msisdn value in LeaderboardProvider:", msisdn); // Debugging step
-      console.log("msisdn from SubscriptionContext:", msisdn);
+ 
       fetchLeaderboard(msisdn);
 
       updateLeaderboard(msisdn, gameScore);
@@ -49,7 +48,6 @@ export const LeaderboardProvider = ({ children }) => {
       const response = await getLeaderboardStanding(msisdn);
 
       if (response?.isSuccessful) {
-        console.log("Fetched data:", response.data);
 
         setLeaderboard(response.data || []);
       } else {

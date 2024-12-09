@@ -78,22 +78,7 @@ const GamePage = () => {
     }
   }, [submitted, modalType, isLoading, score]);
 
-  // useEffect(() => {
-  //   if (timer > 0 && !gameOver && !submitted) {
-  //     const timerInterval = setInterval(
-  //       () => setTimer((prev) => prev - 1),
-  //       1000
-  //     );
-  //     return () => clearInterval(timerInterval);
-  //   }
-  //   // if (timer === 0 && !gameOver) {
-  //   if (timer === 0 && !gameOver && !submitted) {
-  //     setGameOver(true);
-  //     setModalType("timeup");
-  //     setModalVisible(true);
-  //     setScore(0);
-  //   }
-  // }, [timer, gameOver, submitted]);
+ 
 
   useEffect(() => {
     setUserInput(Array(currentQuestion?.text.length).fill(""));
@@ -152,31 +137,7 @@ const GamePage = () => {
     handleSubmitGame(gameData);
   };
 
-  // const handleSubmit = () => {
-  //   if (
-  //     userInput.join("").toUpperCase() ===
-  //     currentQuestion.correctAnswer.toUpperCase()
-  //   ) {
-  //     setModalType("congratulations");
-  //     setModalVisible(true);
-  //     setSubmitted(true);
-  //     setGameOver(true);
-  //   } else {
-  //     if (!gameOver) {
-  //       setModalType("timeup");
-  //       setModalVisible(true);
-  //     }
-  //   }
-  //   const gameData = {
-  //     msisdn,
-  //     questionId: currentQuestion.id,
-  //     submittedAnswer: userInput.join(""),
-  //     isHintUsed: showHint,
-  //     gameDuration: 15 - timer,
-  //     transactionId: generateTransactionId(),
-  //   };
-  //   handleSubmitGame(gameData);
-  // };
+ 
 
   const handlePlayAgain = () => {
     if (gameOver) {
@@ -195,10 +156,7 @@ const GamePage = () => {
     setResetKey((prevKey) => prevKey + 1);
   };
 
-  // const handleTimeUp = () => {
-  //   setGameOver(true);
-  //   setScore(0);
-  // };
+
 
   const handleTimeUp = () => {
     if (!gameOver) {
@@ -360,8 +318,6 @@ const GamePage = () => {
                   onPlayAgain={handlePlayAgain}
                   onHome ={handleHome}
                   onLeaderboard ={handleLeaderboard}
-                  // onHome={() => navigate("/home")}
-                  // onLeaderboard={() => navigate("/leaderboard")}
                   isLoading={isLoading}
                 />
 
@@ -391,6 +347,9 @@ const GamePage = () => {
 };
 
 export default GamePage;
+
+
+
 
 
 

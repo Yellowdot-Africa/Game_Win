@@ -2,8 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const NotificationModal = ({ isOpen }) => {
-  if (!isOpen) return null;
   const navigate = useNavigate();
+
+  if (!isOpen) return null;
 
   const handleGotItClick = () => {
     navigate("/subscribe");

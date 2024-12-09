@@ -15,6 +15,8 @@ const SubscriptionPage = () => {
     { position: "4th - 10th", prize: "R5" },
   ];
 
+ 
+
   return (
     <div className="min-h-screen flex flex-col px-6 mb-2 bg-gray-100">
       <a href="/">
@@ -103,15 +105,22 @@ const SubscriptionPage = () => {
               <option value="r5 font-mochiy text-[12px]">R5/day</option>
               <option value="r15 font-mochiy text-[12px]">R15/week</option>
             </select>
-            <button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white font-mochiy rounded-full px-8 py-3.5 w-full">
+            <button
+              className="bg-gradient-to-r from-purple-500 to-blue-500 text-white font-mochiy rounded-full px-8 py-3.5 w-full"
+              onClick={() => {
+                window.location.href =
+                  "http://optin.telkomsdp.co.za/service/30?ext_ref=123456776";
+              }}
+            >
               Subscribe Now
             </button>
-            <Link
+
+            {/* <Link
               to="/login"
               className="text-purple-600 font-mochiy text-[14px] m-[75px] text-center font-bold hover:underline"
             >
               Back to Login
-            </Link>
+            </Link> */}
           </div>
         </div>
       )}

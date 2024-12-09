@@ -5,10 +5,11 @@ import MainScreen from './Pages/MainScreen';
 import LeaderBoard from './Pages/LeaderBoard';
 import Profile from "./Pages/Profile";
 import GamePage from "./Pages/GamePage";
-import LoginPage from './Pages/LoginPage';
+// import LoginPage from './Pages/LoginPage';
 import SubscriptionPage from './Pages/SubscriptionPage';
 import TnCPage from './Pages/TnCPage';
 import FAQ from './Pages/FAQ';
+import RedirectPage from './Components/RedirectPage';
 import './App.css';
 
 
@@ -19,9 +20,13 @@ const router = createBrowserRouter([
     element: <SplashScreen />,
   },
   {
-    path: "/login",
-    element: <LoginPage/>,
+    path: "/redirect",
+    element: <RedirectPage />,
   },
+  // {
+  //   path: "/login",
+  //   element: <LoginPage/>,
+  // },
   {
     path: "/home",
     element: <MainScreen />,
@@ -50,6 +55,7 @@ const router = createBrowserRouter([
     path: "/subscribe",
     element: <SubscriptionPage />,
   },
+ 
 
   {
     future: {

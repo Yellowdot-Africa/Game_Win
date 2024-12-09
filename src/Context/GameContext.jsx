@@ -43,19 +43,13 @@ export const GameProvider = ({ children, count = 10 }) => {
     fetchQuestions();
   }, [msisdn, count]);
 
-  // const handleAnswer = (userAnswer) => {
-  //   const isCorrect = userAnswer.toUpperCase() === currentQuestion.correctAnswer.toUpperCase();
-  //   if (isCorrect) setScore(prevScore => prevScore + 100);
-
-  //   handleNextQuestion();
-  // };
+ 
 
   const handleAnswer = (userAnswer, hintUsed) => {
     const isCorrect =
       userAnswer.toUpperCase() === currentQuestion.correctAnswer.toUpperCase();
 
     if (isCorrect) {
-      // Optimistic score update based on whether a hint was used
       const pointsToAdd = hintUsed ? 7 : 10; 
       setScore((prevScore) => prevScore + pointsToAdd);
     }

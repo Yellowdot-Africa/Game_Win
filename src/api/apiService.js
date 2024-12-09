@@ -237,27 +237,27 @@ export const submitGamePlay = async (payload) => {
 };
 
 // check subscription
-export const checkSubscriptionStatus = async (msisdn, serviceId) => {
-  try {
-    if (!globalTokenData || !globalTokenData.token) {
-      await authenticate();
-    }
-    const response = await apiClient.get(
-      `/Subscription/CheckStatus?msisdn=${msisdn}&serviceId=${serviceId}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${globalTokenData.token}`,
-        },
-      }
-    );
+// export const checkSubscriptionStatus = async (msisdn, serviceId) => {
+//   try {
+//     if (!globalTokenData || !globalTokenData.token) {
+//       await authenticate();
+//     }
+//     const response = await apiClient.get(
+//       `/Subscription/CheckStatus?msisdn=${msisdn}&serviceId=${serviceId}`,
+//       {
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `Bearer ${globalTokenData.token}`,
+//         },
+//       }
+//     );
 
-    return response.data;
-  } catch (error) {
-    console.error("Error checking subscription status:", error);
-    throw error;
-  }
-};
+//     return response.data;
+//   } catch (error) {
+//     console.error("Error checking subscription status:", error);
+//     throw error;
+//   }
+// };
 
 
 

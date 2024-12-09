@@ -22,7 +22,7 @@ export const ProfileProvider = ({ children }) => {
   const [bank, setBank] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [accountName, setAccountName] = useState("");
-  const { msisdn } = useContext(SubscriptionContext);
+  const { msisdn, setMsisdn } = useContext(SubscriptionContext);
 
   const [operationStatus, setOperationStatus] = useState({
     isSuccessful: false,
@@ -155,6 +155,7 @@ export const ProfileProvider = ({ children }) => {
         // createProfile,
         saveUserSubProfile,
         msisdn,
+        setMsisdn,
         // updateProfile,
       }}
     >

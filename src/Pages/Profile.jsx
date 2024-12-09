@@ -70,17 +70,7 @@ const Profile = () => {
     setAvatarForPlusIcon(selectedAvatar);
   };
 
-  // const handleSaveAvatar = async () => {
-  //   if (selectedAvatar && profile) {
-  //     const avatarIndex = avatarList.indexOf(selectedAvatar) + 1;
-  //     const updatedProfile = { ...profile, avatar: avatarIndex };
-  //     await saveUserSubProfile(updatedProfile);
-  //     localStorage.setItem("avatar", avatar);
-
-  //     setAvatar(avatarIndex);
-  //   }
-  //   setIsAddingAvatar(false);
-  // };
+ 
 
   const handleSaveAvatar = async () => {
     if (selectedAvatar && profile) {
@@ -89,9 +79,9 @@ const Profile = () => {
       
       try {
         await saveUserSubProfile(updatedProfile);
-        localStorage.setItem("avatar", avatarIndex); // Correct the stored avatar index
+        localStorage.setItem("avatar", avatarIndex); 
         setAvatar(avatarIndex);
-        fetchProfile(msisdn); // Re-fetch the profile to ensure it's up to date
+        fetchProfile(msisdn); 
       } catch (error) {
         console.error("Error saving avatar:", error);
       }
@@ -123,30 +113,6 @@ const Profile = () => {
   };
   
 
-  // const handleSaveNickname = async () => {
-  //   if (!profile) {
-  //     console.error("Profile is null or undefined");
-  //     return;
-  //   }
-  
-  //   if (nickname !== profile.nickname) {
-  //     const updatedProfile = { ...profile, nickname };
-  //     await saveUserSubProfile(updatedProfile);
-  //   }
-  //   setIsEditingNickname(false);
-  // };
-  
-
-  // const handleSaveNickname = async () => {
-  //   if (nickname !== profile.nickname) {
-
-  //     const updatedProfile = { ...profile, nickname };
-  //     await createProfile(updatedProfile);
-  //     // localStorage.setItem("nickname", nickname);
-
-  //   }
-  //   setIsEditingNickname(false);
-  // };
 
   const handleCancelAddNickname = () => {
     setIsEditingNickname(false);
