@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import ProfileContext from "../Context/ProfileContext";
-import BgImage from "../assets/bg.png";
+import BgImage from "../assets/bgg.png";
 import GameWin from "../assets/gamewin.png";
 import GemPiles from "../assets/Gemspile.png";
 import UserIcon from "../assets/user-icon.png";

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import BgImage from "../assets/bg.png";
+import BgImage from "../assets/bgg.png";
 
 const SplashScreen = () => {
   const navigate = useNavigate();
