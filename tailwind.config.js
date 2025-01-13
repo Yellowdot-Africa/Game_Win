@@ -9,6 +9,8 @@ export default {
       boxShadow: {
         'custom-drop': '0px 0px 10px 10px #16D1F940',
        'box-shadow': '0px 1px 4px 0px #00000040',
+        'shadow-4': '0px 1px 4px 0px #000000',
+
 
 
         

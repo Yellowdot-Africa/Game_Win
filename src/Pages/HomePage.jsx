@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PlusIcon from "../assets/Icons/plus-icon.png";
 import BgImg from "../assets/Images/splash-img.png";
@@ -14,6 +14,7 @@ import Home from "../assets/Icons/home.png";
 import Leaderboard from "../assets/Icons/leaderboard.png";
 import Profile from "../assets/Icons/profile.png";
 import InstructionModal from "../Modals/InstructionModal";
+import ProfileContext from "../Context/ProfileContext";
 
 const HomePage = () => {
   const avatars = [Avatar1, Avatar2, Avatar3, Avatar4, Avatar5];
@@ -21,16 +22,29 @@ const HomePage = () => {
   const [showAvatarSelector, setShowAvatarSelector] = useState(false);
   const [currentAvatar, setCurrentAvatar] = useState(AvatarProfile);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [scrollDirection, setScrollDirection] = useState(null);
+  const [lastScrollTop, setLastScrollTop] = useState(0);
   const navigate = useNavigate();
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const { profile, saveUserSubProfile, msisdn } = useContext(ProfileContext);
+
+  useEffect(() => {
+    const storedAvatar = localStorage.getItem("selectedAvatar");
+    if (storedAvatar) {
+      setSelectedAvatar(storedAvatar);
+      setCurrentAvatar(storedAvatar);
+    } else {
+      setCurrentAvatar(AvatarProfile);
+    }
+  }, []);
+  const storedMsisdn = localStorage.getItem("cli");
 
   const handlePlayClick = () => {
     setIsModalOpen(true);
   };
 
- 
   const handleAvatarClick = () => {
     setShowAvatarSelector(!showAvatarSelector);
   };
@@ -44,19 +58,16 @@ const HomePage = () => {
       if (!selectedAvatar) return;
       const avatarId = avatars.indexOf(selectedAvatar) + 1;
 
-      const msisdn = userProfile?.msisdn || storedMsisdn;
+      const msisdn = profile?.msisdn || storedMsisdn;
       if (!msisdn) {
         setError("MSISDN is required");
-        // console.log("MSISDN is required");
         return;
       }
       const nickname = msisdn;
-      // console.log("avatar saved", avatarId);
 
-      // console.log("avatar saved in storage", localStorage);
       localStorage.setItem("selectedAvatar", selectedAvatar);
 
-      await handleUpdateSubscriberProfile(msisdn, nickname, avatarId);
+      await saveUserSubProfile(msisdn, nickname, avatarId);
 
       setCurrentAvatar(selectedAvatar);
 
@@ -66,10 +77,17 @@ const HomePage = () => {
     }
   };
 
+  const navStyle = {
+    position: "fixed",
+    bottom: scrollDirection === "down" ? "0px" : "0px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    transition: "bottom 0.5s ease",
+  };
   return (
     <>
       <div
-        className="relative flex flex-col items-center  h-screen text-white"
+        className="relative flex flex-col items-center min-h-[780px] md:h-[1380px] text-white"
         style={{
           backgroundImage: `linear-gradient(196.69deg, rgba(3, 8, 55, 0.9) 27.82%, rgba(23, 11, 103, 0.9) 100%), url(${BgImg})`,
           backgroundSize: "cover",
@@ -81,50 +99,48 @@ const HomePage = () => {
               showAvatarSelector ? " blur-[3px]" : ""
             }`}
           >
-            {/* <div className=" bg-custom-gradient mt-[50px] rounded-[26px]"> */}
             <div className="bg-custom-gradient rounded-[26px] text-white flex justify-center items-center w-[238px] h-[49px]  mt-[50px] mx-auto">
-
-              {/* <div className=" flex justify-center items-center"> */}
-                <div className="flex justify-between items-center ">
-                  <div className="flex items-center  space-x-16  relative">
-                    <div
-                      className="w-[50px] h-[50px]  flex items-center justify-center cursor-pointer"
-                      onClick={handleAvatarClick}
+              <div className="flex justify-between items-center ">
+                <div className="flex items-center  space-x-16  relative">
+                  <div
+                    className="w-[50px] h-[50px]  flex items-center justify-center cursor-pointer"
+                    onClick={handleAvatarClick}
+                  >
+                    <img
+                      src={currentAvatar || AvatarProfile}
+                      alt="Profile Avatar"
+                      className="-ml-[8px] -mb-[6px]"
+                    />
+                  </div>
+                  <div className="flex items-center justify-center gap-[10px]  ">
+                    <Link
+                      to="/terms-and-conditions"
+                      className="border border-[#16D1F9] rounded-[26px] w-[51px] h-[27px] bg-[#7F806266] flex justify-center items-center mt-[12px] mb-[10px] "
                     >
-                      <img
-                        src={currentAvatar || AvatarProfile}
-                        // src={AvatarProfile}
-                        alt="Profile Avatar"
-                        className="-ml-[8px] -mb-[6px]"
-                      />
-                    </div>
-                    <div className="flex items-center justify-center gap-[10px]  ">
-                      <Link
-                        to="/terms-and-conditions"
-                        className="border border-[#16D1F9] rounded-[26px] w-[51px] h-[27px] bg-[#7F806266] flex justify-center items-center mt-[12px] mb-[10px] "
-                      >
-                        <p className="font-alien font-medium text-[12px] leading-[15.6px] text-center text-[#16D1F9]">
-                          T<span style={{ fontFamily: 'Arial, sans-serif' }}>&</span>C's
-                        </p>
-                      </Link>
-                      <Link
-                        to="/faq"
-                        className="border border-[#16D1F9]   rounded-[26px] w-[51px] h-[27px]  flex items-center  justify-center gap-[6px]   py-[5px] px-[20px]  "
-                      >
-                        <p className="font-alien font-medium text-[12px] leading-[15.6px] text-center text-[#16D1F9]">
-                          {" "}
-                          FAQ's
-                        </p>
-                      </Link>
-                    {/* </div> */}
+                      <p className="font-alien font-medium text-[12px] leading-[15.6px] text-center text-[#16D1F9]">
+                        T
+                        <span style={{ fontFamily: "Arial, sans-serif" }}>
+                          &
+                        </span>
+                        C's
+                      </p>
+                    </Link>
+                    <Link
+                      to="/faq"
+                      className="border border-[#16D1F9]   rounded-[26px] w-[51px] h-[27px]  flex items-center  justify-center gap-[6px]   py-[5px] px-[20px]  "
+                    >
+                      <p className="font-alien font-medium text-[12px] leading-[15.6px] text-center text-[#16D1F9]">
+                        {" "}
+                        FAQ's
+                      </p>
+                    </Link>
                   </div>
                 </div>
               </div>
             </div>
             <div className="bg-background w-[140px] h-[27px] rounded-b-[26px] flex items-center justify-center mx-auto shadow-box-shadow">
               <p className="font-mtn-brighter-medium font-medium text-[10px] leading-[13px] text-center text-[#FFFFFF]">
-                {/* @{msisdn} */}
-                @+2778 414 2470
+                @{msisdn}
               </p>
             </div>
             <div
@@ -156,7 +172,9 @@ const HomePage = () => {
               <div className="flex items-center justify-between mb-[20px]">
                 <img src={Coins} alt="coins" />
                 <p className="pr-[17px] text-[#EEEEEE] font-alien text-[14px] font-normal leading-[16.8px]">
-                  First Prize<span style={{ fontFamily: 'Arial, sans-serif' }}>(</span>CASH<span style={{ fontFamily: 'Arial, sans-serif' }}>)</span>
+                  First Prize
+                  <span style={{ fontFamily: "Arial, sans-serif" }}>(</span>CASH
+                  <span style={{ fontFamily: "Arial, sans-serif" }}>)</span>
                 </p>
                 <p className="text-[#ffffff] font-alien text-[16px] font-bold leading-[19.2px]">
                   N100,000
@@ -167,7 +185,9 @@ const HomePage = () => {
               <div className="flex items-center justify-between mb-[20px]">
                 <img src={Coins} alt="coins" />
                 <p className="text-[#EEEEEE] font-alien text-[14px] font-normal leading-[16.8px]">
-                  Second Prize<span style={{ fontFamily: 'Arial, sans-serif' }}>(</span>Cash<span style={{ fontFamily: 'Arial, sans-serif' }}>)</span>
+                  Second Prize
+                  <span style={{ fontFamily: "Arial, sans-serif" }}>(</span>Cash
+                  <span style={{ fontFamily: "Arial, sans-serif" }}>)</span>
                 </p>
                 <p className="text-[#ffffff] font-alien text-[16px] font-bold leading-[19.2px]">
                   N100,000
@@ -187,26 +207,17 @@ const HomePage = () => {
             </div>
 
             <button
-            //   onClick={openModal}
               onClick={handlePlayClick}
-
-            // onClick={isSubscribed ? () => alert("Redirecting to play...") : openModal}
-
               className="bg-btn-background mt-[18px] font-alien text-[14px] font-bold leading-[16.8px] tracking-wider text-center rounded-[24px]  pt-[17px] pb-[13px] pl-[74px] pr-[79px] "
             >
-             Play Fastest Finger
-              {/* {isSubscribed ? "Play Fastest Finger" : "Subscribe to Play"} */}
-
+              Play Fastest Finger
             </button>
-
           </div>
         </div>
 
-       
-
-        <div className="w-max mx-auto -mt-[204px]">
+        <div className="w-max mx-auto -mt-[204px]" style={navStyle}>
           <div
-            className=" mx-auto backdrop-blur-sm flex justify-between items-center w-[342px] h-[82px] bg-[#FFFFFF1A] 
+            className=" mx-auto backdrop-blur-sm flex justify-between items-center w-[342px] h-[82px] rounded-b-[60px] bg-[#FFFFFF1A] 
                pt-[12px] pb-[20px] px-[46px] "
           >
             <Link
@@ -233,10 +244,6 @@ const HomePage = () => {
           <div className="flex items-center justify-center mx-auto">
             <div className="absolute top-[30px] left-auto w-[265px] h-[138px]  bg-[#070E3C]  rounded-[26px]  ">
               <div className="flex items-center justify-center ">
-                {/* <img
-                    src={currentAvatar || AvatarProfile}
-                    alt="Profile Avatar"
-                  /> */}
                 <p className="text-white pt-[12px] font-alien font-normal text-[12px] leading-[13.2px] text-center w-[228px]">
                   Please select an avatar
                 </p>
@@ -281,16 +288,10 @@ const HomePage = () => {
             </div>
           </div>
         )}
-              {isModalOpen && <InstructionModal onClose={closeModal} />}
-
+        {isModalOpen && <InstructionModal onClose={closeModal} />}
       </div>
     </>
   );
 };
 
 export default HomePage;
-
-
-
-
-

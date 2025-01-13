@@ -1,8 +1,11 @@
-import { createContext, useState, useEffect, useContext, useCallback } from "react";
 import {
-  getSubscriberProfile,
-  saveSubscriberProfile,
-} from "../api/apiService";
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+} from "react";
+import { getSubscriberProfile, saveSubscriberProfile } from "../api/apiService";
 import AuthContext from "../Context/AuthContext";
 import SubscriptionContext from "../Context/SubscriptionContext";
 
@@ -10,10 +13,7 @@ const ProfileContext = createContext();
 
 export const ProfileProvider = ({ children }) => {
   const [profile, setProfile] = useState(null);
-  // const [profile, setProfile] = useState(() => {
-  //   const storedProfile = localStorage.getItem("profile");
-  //   return storedProfile ? JSON.parse(storedProfile) : null;
-  // });
+
   const [loading, setLoading] = useState(false);
   const [createLoading, setCreateLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -22,7 +22,9 @@ export const ProfileProvider = ({ children }) => {
   const [bank, setBank] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [accountName, setAccountName] = useState("");
-  const { msisdn, setMsisdn } = useContext(SubscriptionContext);
+  const [msisdn, setMsisdn] = useState(() => {
+    return localStorage.getItem("cli") || "";
+  });
 
   const [operationStatus, setOperationStatus] = useState({
     isSuccessful: false,
@@ -36,35 +38,6 @@ export const ProfileProvider = ({ children }) => {
     localStorage.setItem("profile", JSON.stringify(newProfile));
   };
 
-  // useEffect(() => {
-  //   if (createLoading) {
-  //     setLoading(true);
-  //     setError(null);
-
-  //     getSubscriberProfile(msisdn)
-  //       .then((response) => {
-  //         if (response.isSuccessful) {
-  //           console.log("Profile found:", response.data);
-  //           setProfile(response.data);
-  //         } else {
-  //           throw new Error("Profile not found, attempting to create profile.");
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error creating profile:", error);
-  //         setError("Error creating profile");
-  //       })
-  //       .finally(() => {
-  //         setLoading(false);
-  //         setCreateLoading(false);
-  //       });
-  //   }
-  // }, [createLoading]);
-
-
-
-
-  
   const fetchProfile = useCallback(async () => {
     if (loading) return;
     setLoading(true);
@@ -74,13 +47,10 @@ export const ProfileProvider = ({ children }) => {
       if (response?.isSuccessful) {
         updateProfile(response.data);
 
-        // setProfile(response.data);
         setAvatar(response.data.avatar);
         setSelectedAvatar(avatarList[response.data.avatar - 1]);
       } else {
-
         throw new Error("Profile not found, attempting to create profile.");
-
       }
     } catch (error) {
       if (error.response && error.response.status === 404) {
@@ -151,12 +121,9 @@ export const ProfileProvider = ({ children }) => {
         setAvatar,
         operationStatus,
         fetchProfile,
-        // fetchProfile,
-        // createProfile,
         saveUserSubProfile,
         msisdn,
         setMsisdn,
-        // updateProfile,
       }}
     >
       {children}
@@ -165,7 +132,3 @@ export const ProfileProvider = ({ children }) => {
 };
 
 export default ProfileContext;
-
-
-
-

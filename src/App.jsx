@@ -6,10 +6,10 @@ import LeaderboardPage from "./Pages/LeaderboardPage";
 import UserProfile from "./Pages/UserProfile";
 import Prizes from "./Pages/Prizes";
 import GamePage from "./Pages/GamePage";
-import TnCPage from './Pages/TnCPage';
-import FAQ from './Pages/FAQ.jsx';
-import RedirectPage from './Pages/RedirectPage';
-import SubscriptionPage from './Pages/SubscriptionPage';
+import TnCPage from "./Pages/TnCPage";
+import FAQ from "./Pages/FAQ.jsx";
+import RedirectPage from "./Pages/RedirectPage";
+import SubscriptionPage from "./Pages/SubscriptionPage";
 
 import "./App.css";
 
@@ -42,10 +42,10 @@ const router = createBrowserRouter([
     path: "/prizes",
     element: <Prizes />,
   },
- {
-path: "subscribe",
-element: <SubscriptionPage/>,
- },
+  {
+    path: "subscribe",
+    element: <SubscriptionPage />,
+  },
   {
     path: "/terms-and-conditions",
     element: <TnCPage />,
@@ -61,7 +61,7 @@ element: <SubscriptionPage/>,
       v7_partialHydration: true,
       v7_skipActionErrorRevalidation: true,
     },
-  }
+  },
 ]);
 
 const App = () => {
@@ -73,4 +73,3 @@ const App = () => {
 };
 
 export default App;
-

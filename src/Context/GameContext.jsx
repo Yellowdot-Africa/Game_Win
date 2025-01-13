@@ -13,8 +13,11 @@ export const GameProvider = ({ children, count = 10 }) => {
   const { authData } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const [submissionStatus, setSubmissionStatus] = useState(null);
-  const { msisdn } = useContext(SubscriptionContext);
+  // const { msisdn } = useContext(SubscriptionContext);
 
+  const [msisdn, setMsisdn] = useState(() => {
+    return localStorage.getItem("cli") || "";
+  });
   useEffect(() => {
     if (!msisdn) {
       console.error("MSISDN is not available in SubscriptionContext");
@@ -43,14 +46,12 @@ export const GameProvider = ({ children, count = 10 }) => {
     fetchQuestions();
   }, [msisdn, count]);
 
- 
-
   const handleAnswer = (userAnswer, hintUsed) => {
     const isCorrect =
       userAnswer.toUpperCase() === currentQuestion.correctAnswer.toUpperCase();
 
     if (isCorrect) {
-      const pointsToAdd = hintUsed ? 7 : 10; 
+      const pointsToAdd = hintUsed ? 7 : 10;
       setScore((prevScore) => prevScore + pointsToAdd);
     }
 
@@ -71,7 +72,7 @@ export const GameProvider = ({ children, count = 10 }) => {
   };
 
   const handleSubmitGame = async (gameData) => {
-    setIsLoading(true)
+    setIsLoading(true);
     const response = await submitGamePlay(gameData);
     if (response.isSuccessful) {
       setScore(response.data);
@@ -104,8 +105,3 @@ export const GameProvider = ({ children, count = 10 }) => {
 };
 
 export default GameContext;
-
-
-
-
-

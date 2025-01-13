@@ -18,7 +18,7 @@ import Avatar3 from "../assets/Icons/avatar3.png";
 import Avatar4 from "../assets/Icons/avatar4.png";
 import Avatar5 from "../assets/Icons/avatar5.png";
 import PlusIcon from "../assets/Icons/plus-icon.png";
-// import UserContext from "../Context/UserContext";
+import ProfileContext from "../Context/ProfileContext";
 
 const PrizesPage = () => {
   const prizesData = [
@@ -33,17 +33,16 @@ const PrizesPage = () => {
     { position: 9, dailyAirtime: "R20", monthlyCash: "R200" },
     { position: 10, dailyAirtime: "R10", monthlyCash: "R100" },
   ];
+
   const avatars = [Avatar1, Avatar2, Avatar3, Avatar4, Avatar5];
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [showAvatarSelector, setShowAvatarSelector] = useState(false);
   const [currentAvatar, setCurrentAvatar] = useState(AvatarProfile);
   const navigate = useNavigate();
   const [userAvatar, setUserAvatar] = useState({ AvatarProfile });
-
-    const [scrollDirection, setScrollDirection] = useState(null);
-    const [lastScrollTop, setLastScrollTop] = useState(0);
-  //   const { userProfile, fetchProfile, msisdn, handleUpdateSubscriberProfile } =
-  //   useContext(UserContext);
+  const [scrollDirection, setScrollDirection] = useState(null);
+  const [lastScrollTop, setLastScrollTop] = useState(0);
+  const { msisdn } = useContext(ProfileContext);
 
   useEffect(() => {
     const storedAvatar = localStorage.getItem("selectedAvatar");
@@ -52,34 +51,34 @@ const PrizesPage = () => {
     }
   }, []);
 
-    useEffect(() => {
-      let lastScrollTop = 0;
+  useEffect(() => {
+    let lastScrollTop = 0;
 
-      const handleScroll = () => {
-        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
 
-        if (scrollTop > lastScrollTop) {
-          setScrollDirection("down");
-        } else {
-          setScrollDirection("up");
-        }
-        setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop);
-      };
-
-      window.addEventListener("scroll", handleScroll);
-
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }, [lastScrollTop]);
-
-    const navStyle = {
-      position: "fixed",
-      bottom: scrollDirection === "down" ? "0px" : "0px",
-      left: "50%",
-      transform: "translateX(-50%)",
-      transition: "bottom 0.5s ease",
+      if (scrollTop > lastScrollTop) {
+        setScrollDirection("down");
+      } else {
+        setScrollDirection("up");
+      }
+      setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop);
     };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollTop]);
+
+  const navStyle = {
+    position: "fixed",
+    bottom: scrollDirection === "down" ? "0px" : "0px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    transition: "bottom 0.5s ease",
+  };
 
   const handleAvatarClick = () => {
     setShowAvatarSelector(!showAvatarSelector);
@@ -103,7 +102,7 @@ const PrizesPage = () => {
   return (
     <>
       <div
-        className="relative flex flex-col items-center  h-screen text-white"
+        className="relative flex flex-col items-center  min-h-[1080px] md:h-[1430px] text-white"
         style={{
           backgroundImage: `linear-gradient(196.69deg, rgba(3, 8, 55, 0.9) 27.82%, rgba(23, 11, 103, 0.9) 100%), url(${BgImg})`,
           backgroundSize: "cover",
@@ -141,7 +140,11 @@ const PrizesPage = () => {
                       className="border border-[#16D1F9] rounded-[26px] w-[51px] h-[27px] bg-[#7F806266] flex justify-center items-center mt-[12px] mb-[10px] "
                     >
                       <p className="font-alien font-normal text-[12px] leading-[15.6px] text-center text-[#16D1F9]">
-                        T<span style={{ fontFamily: 'Arial, sans-serif' }}>&</span>C's
+                        T
+                        <span style={{ fontFamily: "Arial, sans-serif" }}>
+                          &
+                        </span>
+                        C's
                       </p>
                     </Link>
                     <Link
@@ -160,8 +163,7 @@ const PrizesPage = () => {
 
             <div className="bg-background w-[140px] h-[28px] rounded-b-[26px] flex items-center justify-center m-auto shadow-box-shadow">
               <p className="font-mtn-brighter-medium font-medium text-[10px] leading-[13px] text-center text-[#FFFFFF]">
-                {/* @{msisdn} */}
-                @+2778 414 2470
+                @{msisdn}
               </p>
             </div>
 
@@ -352,8 +354,3 @@ const PrizesPage = () => {
 };
 
 export default PrizesPage;
-
-
-
-
-

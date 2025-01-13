@@ -8,7 +8,6 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import NotificationModal from "../Modals/NotificationModal";
 import BgImg from "../assets/Images/splash-img.png";
 
-
 const RedirectPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -75,12 +74,12 @@ const RedirectPage = () => {
   return (
     // <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
     <div
-    className="relative flex flex-col items-center justify-center h-screen text-white"
-    style={{
-      backgroundImage: `linear-gradient(196.69deg, rgba(3, 8, 55, 0.9) 27.82%, rgba(23, 11, 103, 0.9) 100%), url(${BgImg})`,
-      backgroundSize: "cover",
-    }}
-  >
+      className="relative flex flex-col items-center justify-center h-screen text-white"
+      style={{
+        backgroundImage: `linear-gradient(196.69deg, rgba(3, 8, 55, 0.9) 27.82%, rgba(23, 11, 103, 0.9) 100%), url(${BgImg})`,
+        backgroundSize: "cover",
+      }}
+    >
       {loading ? (
         <div className="flex flex-col items-center">
           <FontAwesomeIcon
@@ -111,7 +110,3 @@ const RedirectPage = () => {
 };
 
 export default RedirectPage;
-
-
-
-

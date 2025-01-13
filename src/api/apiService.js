@@ -12,35 +12,7 @@ const apiClient = axios.create({
 });
 
 let globalTokenData = null;
-let authenticationPromise = null; 
-
-// AUTH API
-// export const authenticate = async () => {
-//   if (globalTokenData && globalTokenData.expiryTime > new Date().getTime()) {
-//     return globalTokenData;
-//   }
-
-//   try {
-//     const response = await apiClient.post("/Authorization/login", {
-//       username: "games_sa_gamewin",
-//       password: "password",
-//     });
-
-//     const { jwtToken, username, tokenExpiry } = response.data.data;
-//     const expiryTime = new Date().getTime() + tokenExpiry * 1000;
-
-//     globalTokenData = {
-//       token: jwtToken,
-//       expiryTime,
-//       username,
-//     };
-
-//     return globalTokenData;
-//   } catch (error) {
-//     console.error("Error authenticating:", error);
-//     throw error;
-//   }
-// };
+let authenticationPromise = null;
 
 export const authenticate = async () => {
   if (globalTokenData && globalTokenData.expiryTime > new Date().getTime()) {
@@ -69,7 +41,6 @@ export const authenticate = async () => {
 
   return authenticationPromise;
 };
-
 
 // get subscriberprofile API
 export const getSubscriberProfile = async (msisdn) => {
@@ -117,11 +88,9 @@ export const saveSubscriberProfile = async ({
       accountNumber,
       accountName,
     };
-    console.log('Request Payload:', profileData);
-
+    console.log("Request Payload:", profileData);
 
     const response = await apiClient.post(
-
       "/Profile/SaveUserProfile",
 
       profileData,
@@ -258,8 +227,3 @@ export const submitGamePlay = async (payload) => {
 //     throw error;
 //   }
 // };
-
-
-
-
-

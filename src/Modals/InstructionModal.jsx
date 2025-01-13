@@ -16,7 +16,6 @@ const InstructionModal = ({ onClose }) => {
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <div className="bg-[#070E3C] rounded-[20px] border border-[#16D1F9] shadow-box-shadow p-6 max-w-md mx-4 text-center">
         <div className="md:w-5/6 mx-auto text-center relative">
-        
           <p className="my-3 text-center text-[16px] font-alien font-normal leading-[19.2px]">
             Below are the game play conditions{" "}
           </p>
@@ -29,7 +28,10 @@ const InstructionModal = ({ onClose }) => {
               />
 
               <p className="font-alien text-[#EEEEEE] font-normal text-[12px] leading-[14.4px]">
-              Find the letters of the text <span className="font-alien font-bold text-[12px] leading-[14.4px]"><span>"</span>WORD<span>"</span></span>{" "}
+                Find the letters of the text{" "}
+                <span className="font-alien font-bold text-[12px] leading-[14.4px]">
+                  <span>"</span>WORD<span>"</span>
+                </span>{" "}
               </p>
             </div>
             <div className="flex items-center gap-3 text-left">
@@ -59,15 +61,13 @@ const InstructionModal = ({ onClose }) => {
           >
             Continue
           </button>
-           <button
+          <button
             onClick={onClose}
             className=" font-alien font-bold leading-[16.8px] text-center text-[14px]"
           >
-           Clear
+            Clear
           </button>
-        
         </div>
-       
       </div>
     </div>
   );
