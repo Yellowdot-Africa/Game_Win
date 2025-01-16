@@ -236,7 +236,7 @@ const GamePage = () => {
             <div className="flex items-center justify-center">
               <button
                 onClick={handleHintClick}
-                className="px-4 py-2 mb-4 bg-violet-900  text-white rounded-md font-mochiy text-[14px]  transition"
+                className="px-4 py-2 mb-4 bg-input-background  text-white rounded-md font-mochiy text-[14px]  transition"
               >
                 {showHint ? "Hide Hint" : "Show Hint"}
               </button>

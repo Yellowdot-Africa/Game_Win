@@ -6,9 +6,12 @@ const NotificationModal = ({ isOpen }) => {
 
   if (!isOpen) return null;
 
+
   const handleGotItClick = () => {
     navigate("/subscribe");
   };
+
+
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
