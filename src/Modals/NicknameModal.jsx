@@ -64,12 +64,11 @@ const NicknameModal = ({ onClose }) => {
               >
                 <img src={PlusIcon} alt="Edit Nickname" className="w-10 h-10" />
               </button>
-             
+
               <div className="flex flex-col justify-center -ml-[100px]">
-              
-               <p className="font-alien text-[#EEEEEE] font-normal text-[14px] leading-[14.4px]">
-                {nickname || "No Nickname Set"}
-              </p>
+                <p className="font-alien text-[#EEEEEE] font-normal text-[14px] leading-[14.4px]">
+                  {nickname || "No Nickname Set"}
+                </p>
                 <p className="font-alien text-[#EEEEEE] font-normal text-[12px] leading-[14.4px] mt-[8px]">
                   {nickname ? "Selected" : "Not Set"}
                 </p>
@@ -98,14 +97,12 @@ const NicknameModal = ({ onClose }) => {
                 <button
                   onClick={handleSaveNickname}
                   className="bg-btn-background w-full text-[14px] font-alien font-bold leading-[16.8px] text-center text-white px-4 py-4 rounded-[24px] my-8"
-                  // className="px-6 py-2 bg-blue-500 text-white rounded-md"
                 >
                   Save
                 </button>
                 <button
                   onClick={handleCancelEdit}
                   className=" font-alien font-bold leading-[16.8px] text-center text-[14px]"
-                  // className="px-6 py-2 bg-gray-500 text-white rounded-md"
                 >
                   Cancel
                 </button>
