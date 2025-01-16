@@ -124,6 +124,7 @@ const SubscriptionPage = () => {
                 onClick={() => {
                   window.location.href =
                     "http://optin.telkomsdp.co.za/service/30?ext_ref=123456776";
+                  // "https://sdp-p-vas-payment.telkom.co.za/144";
                 }}
               >
                 Subscribe Now

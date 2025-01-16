@@ -5,7 +5,6 @@ import { ProfileProvider } from "./Context/ProfileContext";
 import { LeaderboardProvider } from "./Context/LeaderboardContext";
 import { SubscriptionProvider } from "./Context/SubscriptionContext";
 import { GameProvider } from "./Context/GameContext";
-
 import "./index.css";
 import App from "./App.jsx";
 

@@ -30,8 +30,8 @@ export const checkSubscriptionStatus = async (msisdn, serviceId) => {
         setErrorMessage(
           "Your subscription is inactive. Please subscribe to continue."
         );
-        window.location.href =
-          "https://play.mtn.co.za/subscribe/service/10421?gv_id=4539";
+        // window.location.href =
+        //   "https://play.mtn.co.za/subscribe/service/10421?gv_id=4539";
       } else {
         const errorMsg =
           error.response?.data?.msg ||

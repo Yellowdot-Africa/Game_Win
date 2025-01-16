@@ -144,7 +144,7 @@ const HomePage = () => {
               </p>
             </div>
             <div
-              className={`relative flex justify-center items-center mt-[11px] ${
+              className={`relative flex flex-col  justify-center items-center  mt-[11px] ${
                 isModalOpen ? "blur-md" : ""
               }`}
             >
@@ -154,67 +154,68 @@ const HomePage = () => {
                   textUnderlinePosition: "from-font",
                   textDecorationSkipInk: "none",
                 }}
-                className=" text-[46px] leading-[55.2px] tracking-spacing-4 text-center  shadow-custom-drop font-bold font-alien bg-[#0258FD66] text-[#ffffff]  border-4 border-[#16D1F9] rounded-[24px]  px-[43px] py-[46px]"
+                className=" text-[46px] leading-[55.2px]  tracking-spacing-4 text-center  shadow-custom-drop font-bold font-alien bg-[#0258FD66] text-[#ffffff]  border-4 border-[#16D1F9] rounded-[24px]  px-[43px] py-[46px]"
               >
                 GAMEWIN
               </h1>
+
+              <p
+                style={{ textShadow: "0px 4px 4px #FFFFFF40" }}
+                className="mt-[25px] text-[18px] leading-[21.6px] font-normal font-alien tracking-wide text-center text-shadow  text-[#FFFFFF]"
+              >
+                FASTEST FINGERS WIN
+              </p>
+
+              <div className="bg-[#E3E4E31A] mt-[12px] w-[342px] h-[174px] shadow-box-shadow p-[20px]">
+                {/* First Prize */}
+                <div className="flex items-center justify-between mb-[20px]">
+                  <img src={Coins} alt="coins" />
+                  <p className="pr-[17px] text-[#EEEEEE] font-alien text-[14px] font-normal leading-[16.8px]">
+                    First Prize
+                    <span style={{ fontFamily: "Arial, sans-serif" }}>(</span>
+                    CASH
+                    <span style={{ fontFamily: "Arial, sans-serif" }}>)</span>
+                  </p>
+                  <p className="text-[#ffffff] font-alien text-[16px] font-bold leading-[19.2px]">
+                    N100,000
+                  </p>
+                </div>
+
+                {/* Second Prize */}
+                <div className="flex items-center justify-between mb-[20px]">
+                  <img src={Coins} alt="coins" />
+                  <p className="text-[#EEEEEE] font-alien text-[14px] font-normal leading-[16.8px]">
+                    Second Prize
+                    <span style={{ fontFamily: "Arial, sans-serif" }}>(</span>
+                    Cash
+                    <span style={{ fontFamily: "Arial, sans-serif" }}>)</span>
+                  </p>
+                  <p className="text-[#ffffff] font-alien text-[16px] font-bold leading-[19.2px]">
+                    N100,000
+                  </p>
+                </div>
+
+                {/* Airtime */}
+                <div className="flex items-center justify-between">
+                  <img src={Airtime} alt="airtime" className="pl-[12px]" />
+                  <p className="pr-[108px] text-[#EEEEEE] font-alien text-[14px] font-normal leading-[16.8px]">
+                    AIRTIME
+                  </p>
+                  <p className="text-[#ffffff] font-alien text-[16px] font-bold leading-[19.2px]">
+                    10,000
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={handlePlayClick}
+                className="bg-btn-background mt-[18px] font-alien text-[14px] font-bold leading-[16.8px] tracking-wider text-center rounded-[24px]  pt-[17px] pb-[13px] pl-[74px] pr-[79px] "
+              >
+                Play Fastest Finger
+              </button>
             </div>
-
-            <p
-              style={{ textShadow: "0px 4px 4px #FFFFFF40" }}
-              className="mt-[25px] text-[18px] leading-[21.6px] font-normal font-alien tracking-wide text-center text-shadow  text-[#FFFFFF]"
-            >
-              FASTEST FINGERS WIN
-            </p>
-
-            <div className="bg-[#E3E4E31A] mt-[12px] w-[342px] h-[174px] shadow-box-shadow p-[20px]">
-              {/* First Prize */}
-              <div className="flex items-center justify-between mb-[20px]">
-                <img src={Coins} alt="coins" />
-                <p className="pr-[17px] text-[#EEEEEE] font-alien text-[14px] font-normal leading-[16.8px]">
-                  First Prize
-                  <span style={{ fontFamily: "Arial, sans-serif" }}>(</span>CASH
-                  <span style={{ fontFamily: "Arial, sans-serif" }}>)</span>
-                </p>
-                <p className="text-[#ffffff] font-alien text-[16px] font-bold leading-[19.2px]">
-                  N100,000
-                </p>
-              </div>
-
-              {/* Second Prize */}
-              <div className="flex items-center justify-between mb-[20px]">
-                <img src={Coins} alt="coins" />
-                <p className="text-[#EEEEEE] font-alien text-[14px] font-normal leading-[16.8px]">
-                  Second Prize
-                  <span style={{ fontFamily: "Arial, sans-serif" }}>(</span>Cash
-                  <span style={{ fontFamily: "Arial, sans-serif" }}>)</span>
-                </p>
-                <p className="text-[#ffffff] font-alien text-[16px] font-bold leading-[19.2px]">
-                  N100,000
-                </p>
-              </div>
-
-              {/* Airtime */}
-              <div className="flex items-center justify-between">
-                <img src={Airtime} alt="airtime" className="pl-[12px]" />
-                <p className="pr-[108px] text-[#EEEEEE] font-alien text-[14px] font-normal leading-[16.8px]">
-                  AIRTIME
-                </p>
-                <p className="text-[#ffffff] font-alien text-[16px] font-bold leading-[19.2px]">
-                  10,000
-                </p>
-              </div>
-            </div>
-
-            <button
-              onClick={handlePlayClick}
-              className="bg-btn-background mt-[18px] font-alien text-[14px] font-bold leading-[16.8px] tracking-wider text-center rounded-[24px]  pt-[17px] pb-[13px] pl-[74px] pr-[79px] "
-            >
-              Play Fastest Finger
-            </button>
           </div>
         </div>
-
         <div className="w-max mx-auto -mt-[204px]" style={navStyle}>
           <div
             className=" mx-auto backdrop-blur-sm flex justify-between items-center w-[342px] h-[82px] rounded-b-[60px] bg-[#FFFFFF1A] 

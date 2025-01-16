@@ -80,10 +80,16 @@ const UserProfile = () => {
     setModalOpen(true);
   };
 
+  const handleNicknameCloseModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <>
       <div
-        className="relative flex flex-col items-center justify-center h-[1009px] md:h-[1390px] text-white"
+        className={`relative flex flex-col items-center justify-center h-[1009px] md:h-[1390px] text-white ${isModalOpen || ModalOpen ? 'backdrop-blur-lg' : ''}`}
+
+        // className="relative flex flex-col items-center justify-center h-[1009px] md:h-[1390px] text-white"
         style={{
           backgroundImage: `linear-gradient(196.69deg, rgba(3, 8, 55, 0.9) 27.82%, rgba(23, 11, 103, 0.9) 100%), url(${BgImg})`,
           backgroundSize: "cover",
@@ -113,10 +119,11 @@ const UserProfile = () => {
 
           <div className="flex items-center justify-between mt-[11px]">
             <div className="text-center text-white ml-[13px] md:ml-[170px]">
-              <p className="font-mtn-brighter-medium font-medium text-[14px] leading-[18.2px] text-center">
-                @{msisdn}
+              <p className="font-alien font-medium text-[14px] leading-[18.2px] text-center">
+              <span style={{ fontFamily: "Arial, sans-serif" }}>@</span>
+{msisdn}
               </p>
-              <p className="font-mtn-brighter-medium font-medium text-[14px] leading-[18.2px] text-center">
+              <p className="font-alien font-medium text-[14px] leading-[18.2px] text-center">
                 {nickname}
               </p>
             </div>
@@ -205,7 +212,7 @@ const UserProfile = () => {
           </div>
         </div>
         {isModalOpen && <InstructionModal onClose={closeModal} />}
-        {ModalOpen && <NicknameModal onClose={closeModal} />}
+        {ModalOpen && <NicknameModal onClose={handleNicknameCloseModal} />}
       </div>
     </>
   );

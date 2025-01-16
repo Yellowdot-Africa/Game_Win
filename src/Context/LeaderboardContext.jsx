@@ -34,7 +34,6 @@ export const LeaderboardProvider = ({ children }) => {
 
   useEffect(() => {
     if (msisdn) {
- 
       fetchLeaderboard(msisdn);
 
       updateLeaderboard(msisdn, gameScore);
@@ -48,7 +47,6 @@ export const LeaderboardProvider = ({ children }) => {
       const response = await getLeaderboardStanding(msisdn);
 
       if (response?.isSuccessful) {
-
         setLeaderboard(response.data || []);
       } else {
         setError("Failed to load leaderboard.");

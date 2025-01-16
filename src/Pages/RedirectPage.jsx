@@ -72,7 +72,6 @@ const RedirectPage = () => {
   };
 
   return (
-    // <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
     <div
       className="relative flex flex-col items-center justify-center h-screen text-white"
       style={{

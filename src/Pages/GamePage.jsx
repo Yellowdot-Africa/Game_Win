@@ -54,43 +54,23 @@ const GamePage = () => {
     setAlphabet(shuffled);
   };
 
-  // useEffect(() => {
-  //   if (timer > 0) {
-  //     const timerInterval = setInterval(
-  //       () => setTimer((prev) => prev - 1),
-  //       1000
-  //     );
-  //     return () => clearInterval(timerInterval);
-  //   }
-
-  //   if (timer === 0 && !gameOver) {
-  //     setGameOver(true);
-  //     setModalType("timeup");
-  //     setModalVisible(true);
-  //     setScore((prevScore) => prevScore);
-  //   }
-  // }, [timer, gameOver]);
-
   useEffect(() => {
     if (timer > 0 && !gameOver) {
       const timerInterval = setInterval(() => {
         setTimer((prev) => prev - 1);
-        setTimeUsed((prevTimeUsed) => prevTimeUsed + 1); // Increment timeUsed only if the timer is active
+        setTimeUsed((prevTimeUsed) => prevTimeUsed + 1);
       }, 1000);
-  
-      return () => clearInterval(timerInterval); // Clean up interval on unmount
+
+      return () => clearInterval(timerInterval);
     }
-  
+
     if (timer === 0 && !gameOver) {
       setGameOver(true);
       setModalType("timeup");
       setModalVisible(true);
-      setScore((prevScore) => prevScore); // Ensure the score doesn't change here
+      setScore((prevScore) => prevScore);
     }
   }, [timer, gameOver]);
-  
-  
-  
 
   useEffect(() => {
     if (
@@ -136,32 +116,31 @@ const GamePage = () => {
 
   const handleSubmit = () => {
     if (!gameOver) {
-    if (
-      userInput.join("").toUpperCase() ===
-      currentQuestion.correctAnswer.toUpperCase()
-    ) {
-      setSubmitted(true);
-      setModalType("congratulations");
-      setModalVisible(true);
-      setGameOver(true);
-    } else {
-      setModalType("wrongAnswer");
-      setModalVisible(true);
-      setSubmitted(true);
+      if (
+        userInput.join("").toUpperCase() ===
+        currentQuestion.correctAnswer.toUpperCase()
+      ) {
+        setSubmitted(true);
+        setModalType("congratulations");
+        setModalVisible(true);
+        setGameOver(true);
+      } else {
+        setModalType("wrongAnswer");
+        setModalVisible(true);
+        setSubmitted(true);
+      }
+
+      const gameData = {
+        msisdn,
+        questionId: currentQuestion.id,
+        submittedAnswer: userInput.join(""),
+        isHintUsed: showHint,
+        gameDuration: timeUsed,
+        transactionId: generateTransactionId(),
+      };
+      handleSubmitGame(gameData);
     }
-
-    const gameData = {
-      msisdn,
-      questionId: currentQuestion.id,
-      submittedAnswer: userInput.join(""),
-      isHintUsed: showHint,
-      gameDuration: timeUsed,
-      transactionId: generateTransactionId(),
-    };
-    handleSubmitGame(gameData);
-  }
   };
-
 
   const handlePlayAgain = () => {
     if (gameOver) {
@@ -224,7 +203,6 @@ const GamePage = () => {
                 className="text-white text-2xl mb-2"
               />
 
-              {/* <Timer timeLeft={timer} /> */}
               <Timer onTimeUp={handleTimeUp} resetKey={resetKey} />
             </div>
 
@@ -233,8 +211,6 @@ const GamePage = () => {
               {currentQuestion?.instruction}
             </p>
             <div className="flex flex-wrap justify-center items-center gap-1 mb-6 mx-auto w-full max-w-[90%] md:max-w-[47%] lg:max-w-[35%]">
-              {/* <div className="grid grid-cols-auto-fit gap-1 mb-6 w-full max-w-[90%] mx-auto md:max-w-[47%] lg:max-w-[35%] */}
-              {/* <div className="grid grid-cols-auto-fit gap-1 mb-6  mx-auto "> */}
               {currentQuestion?.text.split("").map((letter, index) => (
                 <div
                   key={index}
@@ -244,17 +220,6 @@ const GamePage = () => {
                 </div>
               ))}
             </div>
-
-            {/* <div className="flex items-center justify-center gap-1 mb-6">
-              {currentQuestion?.text.split("").map((letter, index) => (
-                <div
-                  key={index}
-                  className="bg-purple-900 text-white text-center font-mochiy text-[12px] capitalize  px-3 py-2 rounded-[8px] shadow-shadow-4 border border-orange-400"
-                >
-                  {letter}
-                </div>
-              ))}
-            </div> */}
 
             {/* Hint Button */}
             <div className="flex items-center justify-center">
@@ -277,20 +242,8 @@ const GamePage = () => {
                 <p className="text-white mx-auto font-alien mb-4">Selections</p>
 
                 {/* Word Input Fields */}
-                {/* <div className=" flex mx-auto w-1/4 gap-1 mb-4 justify-center">
-                  {currentQuestion?.text.split("").map((_, index) => (
-                    <input
-                      key={index}
-                      type="text"
-                      value={userInput[index] || ""}
-                      onChange={(e) => handleInputChange(index, e.target.value)}
-                      readOnly={gameOver}
-                      className="w-8 md:w-10 h-12 text-center bg-purple-100 border-2 border-black mb-4 rounded-md text-[14px] font-mochiy font-normal"
-                    />
-                  ))}
-                </div> */}
+
                 <div className="flex flex-wrap justify-center items-center gap-1 mb-6 mx-auto w-full max-w-[90%] md:max-w-[47%] lg:max-w-[35%]">
-                  {/* <div className="grid grid-cols-auto-fit gap-2 mb-4 mx-auto justify-center items-center w-full max-w-[90%]"> */}
                   {currentQuestion?.text.split("").map((_, index) => (
                     <input
                       key={index}

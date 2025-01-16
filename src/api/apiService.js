@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const BASE_URL = "https://fastestfingers.runasp.net/api/FastestFingers";
-// const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 // Configure Axios for all requests
 const apiClient = axios.create({
@@ -46,7 +45,7 @@ export const authenticate = async () => {
 export const getSubscriberProfile = async (msisdn) => {
   try {
     if (!globalTokenData || !globalTokenData.token) {
-      await authenticate(); // Authenticate and set the global token if it's not available
+      await authenticate(); // this authenticate and set the global token if it's not available
     }
 
     const response = await apiClient.get(

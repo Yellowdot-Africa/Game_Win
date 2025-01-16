@@ -23,10 +23,9 @@ const FAQ = () => {
         "The grand prize is R1000, which you can win by playing and ranking high.",
     },
     {
-        question: "What happens if I click on the Hint button?",
-        answer: "When you click on the Hint button during the game, 3 points will be deducted from the score as a penalty for using a hint. Use hints wisely to maximize your score!"
-
-
+      question: "What happens if I click on the Hint button?",
+      answer:
+        "When you click on the Hint button during the game, 3 points will be deducted from the score as a penalty for using a hint. Use hints wisely to maximize your score!",
     },
   ];
 
@@ -51,7 +50,9 @@ const FAQ = () => {
               className="flex justify-between items-center p-4 bg-gradient-to-r from-purple-500 to-blue-500 cursor-pointer"
               onClick={() => toggleAccordion(index)}
             >
-              <h2 className="text-white text-lg font-mochiy">{item.question}</h2>
+              <h2 className="text-white text-lg font-mochiy">
+                {item.question}
+              </h2>
               <span className="text-white text-xl">
                 {activeIndex === index ? "-" : "+"}
               </span>
