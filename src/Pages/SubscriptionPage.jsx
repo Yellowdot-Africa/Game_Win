@@ -123,8 +123,8 @@ const SubscriptionPage = () => {
                 className="bg-btn-background text-white text-[14px] font-bold font-alien leading-[16.8px] text-center px-4 py-3 rounded-[24px] mb-[12px]"
                 onClick={() => {
                   window.location.href =
-                    "http://optin.telkomsdp.co.za/service/30?ext_ref=123456776";
-                  // "https://sdp-p-vas-payment.telkom.co.za/144";
+                    // "http://optin.telkomsdp.co.za/service/30?ext_ref=123456776";
+                  "https://sdp-p-vas-payment.telkom.co.za/30?ext_ref=123456776";
                 }}
               >
                 Subscribe Now
