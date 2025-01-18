@@ -10,7 +10,9 @@ import TnCPage from "./Pages/TnCPage";
 import FAQ from "./Pages/FAQ.jsx";
 import RedirectPage from "./Pages/RedirectPage";
 import SubscriptionPage from "./Pages/SubscriptionPage";
-
+import SubscriptionGuard from "./Components/SubscriptionGuard";
+import SubscriptionExpiredPage from "./Pages/SubscriptionExpiredPage";
+import NotFoundPage from "./Pages/NotFoundPage";
 import "./App.css";
 
 const router = createBrowserRouter([
@@ -24,19 +26,39 @@ const router = createBrowserRouter([
   },
   {
     path: "/home",
-    element: <HomePage />,
+    // element: <HomePage />,
+    element: (
+      <SubscriptionGuard>
+        <HomePage />
+      </SubscriptionGuard>
+    ),
   },
   {
     path: "/game-play",
-    element: <GamePage />,
+    // element: <GamePage />,
+    element: (
+      <SubscriptionGuard>
+        <GamePage />
+      </SubscriptionGuard>
+    ),
   },
   {
     path: "/leaderboard",
-    element: <LeaderboardPage />,
+    // element: <LeaderboardPage />,
+    element: (
+      <SubscriptionGuard>
+        <LeaderboardPage />
+      </SubscriptionGuard>
+    ),
   },
   {
     path: "/user-profile",
-    element: <UserProfile />,
+    // element: <UserProfile />,
+    element: (
+      <SubscriptionGuard>
+        <UserProfile />
+      </SubscriptionGuard>
+    ),
   },
   {
     path: "/prizes",
@@ -53,6 +75,14 @@ const router = createBrowserRouter([
   {
     path: "/faq",
     element: <FAQ />,
+  },
+  {
+    path: "/subscription-expired",
+    element: <SubscriptionExpiredPage />,
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
   },
 
   {

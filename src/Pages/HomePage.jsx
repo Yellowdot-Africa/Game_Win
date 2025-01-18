@@ -177,7 +177,7 @@ const HomePage = () => {
                     <span style={{ fontFamily: "Arial, sans-serif" }}>)</span>
                   </p>
                   <p className="text-[#ffffff] font-alien text-[16px] font-bold leading-[19.2px]">
-                    N100,000
+                    R20,000
                   </p>
                 </div>
 
@@ -191,7 +191,7 @@ const HomePage = () => {
                     <span style={{ fontFamily: "Arial, sans-serif" }}>)</span>
                   </p>
                   <p className="text-[#ffffff] font-alien text-[16px] font-bold leading-[19.2px]">
-                    N100,000
+                    R10,000
                   </p>
                 </div>
 

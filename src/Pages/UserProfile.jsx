@@ -102,6 +102,11 @@ const UserProfile = () => {
               // src={Avatar1}
               src={userAvatar || Avatar1}
               alt="avatar icon"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = Avatar1;
+              }}
+              loading="lazy"
             />
             <div className="flex gap-[23px] mr-[31px] md:mr-[100px]">
               <img
