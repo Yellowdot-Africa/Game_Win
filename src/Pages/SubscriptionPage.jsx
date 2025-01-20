@@ -9,7 +9,7 @@ const SubscriptionPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("");
 
-  const plans = ["20R/day", "100R/month"];
+  const plans = ["500R/day", "1000R/month"];
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -144,7 +144,5 @@ const SubscriptionPage = () => {
 };
 
 export default SubscriptionPage;
-
-
 
 
